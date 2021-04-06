@@ -42,6 +42,9 @@ header {
     margin: auto 0;
     margin-right: 10px;
     width: 20%;
+    p {
+      text-transform: uppercase;
+    }
   }
 }
 </style>

@@ -1,58 +1,360 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+  <div id="app">
+    <fixed-header>
+      <div class="navbar">
+        <TopMenu/>
+        <ActionsMenu/>
+      </div>
+    </fixed-header>
+    <div class="content">
+      <div id="maincontent">
+        <div class="persona">
+          <PersonaHeader/>
+          <div class="row">
+            <div class="col-3 persona-card">
+
+            </div>
+            <div class="col-3 add-element">
+              <AddElementHeader/>
+              <div class="persona-fields">
+                <div v-for="element in addElement" :key="element.id">
+                  <div @drag="drag" @dragend="dragend(element.field_type)"
+                       class="droppable-element" draggable="true" unselectable="on" >
+                    <ContentBlock :header="element.title" :img-url="element.main"/></div>
+                </div>
+              </div>
+              <InfoBlock/>
+              <br><br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--    <div>-->
+    <!--      <div class="layoutJSON">-->
+    <!--        Displayed as <code>[x, y, w, h]</code>:-->
+    <!--        <div class="columns">-->
+    <!--          <div class="layoutItem" v-for="item in layout" :key="item.i">-->
+    <!--            <b>{{ item.i }}</b>: [{{ item.x }}, {{ item.y }}, {{ item.w }}, {{ item.h }}]-->
+    <!--          </div>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--    </div>-->
+
+    <div id="content">
+      <grid-layout ref="gridlayout" :layout.sync="layout"
+                   :col-num="6"
+                   :row-height="30"
+                   :is-draggable="true"
+                   :is-resizable="true"
+                   :vertical-compact="true"
+                   :use-css-transforms="true"
+      >
+        <grid-item :key="item.i" v-for="item in layout"
+                   :x="item.x"
+                   :y="item.y"
+                   :w="item.w"
+                   :h="item.h"
+                   :i="item.i"
+                   :type="item.type"
+        >
+          <PersonaItem :element="item"/>
+        </grid-item>
+      </grid-layout>
+    </div>
   </div>
 </template>
-
 <script>
+import ActionsMenu from '@/components/menu/ActionsMenu.vue';
+import AddElementHeader from '@/components/AddElementHeader.vue';
+import ContentBlock from '@/components/ContentNewElement.vue';
+import FixedHeader from 'vue-fixed-header';
+import InfoBlock from '@/components/InfoBlock.vue';
+import PersonaHeader from '@/components/PersonaHeader.vue';
+import TopMenu from '@/components/menu/TopMenu.vue';
+import VueGridLayout from 'vue-grid-layout';
+import PersonaItem from '@/components/PersonaItem.vue';
+
+const mouseXY = { x: null, y: null };
+const DragPos = {
+  x: null, y: null, w: 1, h: 1, i: null,
+};
+
 export default {
   name: 'HelloWorld',
-  props: {
-    msg: String,
+  components: {
+    ActionsMenu,
+    AddElementHeader,
+    ContentBlock,
+    FixedHeader,
+    GridLayout: VueGridLayout.GridLayout,
+    GridItem: VueGridLayout.GridItem,
+    InfoBlock,
+    PersonaHeader,
+    PersonaItem,
+    TopMenu,
+  },
+  data() {
+    return {
+      // Elements to select from.
+      addElement: [
+        {
+          id: 1, field_type: 'SHORT_TEXT', main: 'text.png', title: 'SHORT TEXT', data: null,
+        },
+        {
+          id: 2, field_type: 'LONG_TEXT', main: 'long.png', title: 'LONG TEXT', data: null,
+        },
+        {
+          id: 3, field_type: 'IMAGE', main: 'image.png', title: 'IMAGE', data: null,
+        },
+        {
+          id: 4, field_type: 'IMAGE_GALLERY', main: 'galleryImgs.png', title: 'IMAGE GALLERY', data: null,
+        },
+        {
+          id: 5, field_type: 'NUMBER', main: 'numbers.png', title: 'NUMBER', data: null,
+        },
+      ],
+      layout: [
+        {
+          x: 0, y: 0, w: 2, h: 2, i: '0', type: 'SHORT_TEXT',
+        },
+        {
+          x: 2, y: 0, w: 2, h: 4, i: '1', type: 'SHORT_TEXT',
+        },
+        {
+          x: 4, y: 0, w: 2, h: 5, i: '2', type: 'IMAGE_GALLERY',
+        },
+        {
+          x: 4, y: 10, w: 2, h: 3, i: '3', type: 'SHORT_TEXT',
+        },
+        {
+          x: 2, y: 4, w: 2, h: 3, i: '4', type: 'IMAGE',
+        },
+        {
+          x: 2, y: 10, w: 2, h: 3, i: '5', type: 'SHORT_TEXT',
+        },
+        {
+          x: 0, y: 5, w: 2, h: 5, i: '6', type: 'IMAGE',
+        },
+        {
+          x: 0, y: 10, w: 2, h: 5, i: '7', type: 'SHORT_TEXT',
+        },
+        {
+          x: 4, y: 5, w: 2, h: 5, i: '8', type: 'IMAGE',
+        },
+        {
+          x: 0, y: 7, w: 4, h: 3, i: '9', type: 'SHORT_TEXT',
+        },
+      ],
+      draggable: true,
+      resizable: true,
+      mirrored: false,
+      responsive: true,
+      preventCollision: false,
+      compact: true,
+      index: 0,
+      marginX: 10,
+      marginY: 10,
+    };
+  },
+  mounted() {
+    this.index = this.layout.length;
+    document.addEventListener('dragover', (e) => {
+      mouseXY.x = e.clientX;
+      mouseXY.y = e.clientY;
+    }, false);
+  },
+  watch: {
+    layout() {
+      // console.log(this.layout);
+    },
+  },
+  methods: {
+    drag() {
+      const parentRect = document.getElementById('content').getBoundingClientRect();
+      let mouseInGrid = false;
+      if (((mouseXY.x > parentRect.left) && (mouseXY.x < parentRect.right))
+        && ((mouseXY.y > parentRect.top) && (mouseXY.y < parentRect.bottom))) {
+        mouseInGrid = true;
+      }
+      if (mouseInGrid === true && (this.layout.findIndex((item) => item.i === 'drop')) === -1) {
+        this.layout.push({
+          x: (this.layout.length * 2) % (this.colNum || 10),
+          y: this.layout.length + (this.colNum || 10), // puts it at the bottom
+          w: 1,
+          h: 1,
+          i: 'drop',
+        });
+      }
+      const index = this.layout.findIndex((item) => item.i === 'drop');
+      if (index !== -1) {
+        try {
+          this.$refs.gridlayout.$children[this.layout.length].$refs.item.style.display = 'none';
+        } catch {
+          console.log('catch ...');
+        }
+        const el = this.$refs.gridlayout.$children[index];
+        el.dragging = { top: mouseXY.y - parentRect.top, left: mouseXY.x - parentRect.left };
+        const newPos = el.calcXY(mouseXY.y - parentRect.top, mouseXY.x - parentRect.left);
+
+        if (mouseInGrid === true) {
+          this.$refs.gridlayout.dragEvent('dragstart', 'drop', newPos.x, newPos.y, 1, 1);
+          DragPos.i = String(index);
+          DragPos.x = this.layout[index].x;
+          DragPos.y = this.layout[index].y;
+        }
+        if (mouseInGrid === false) {
+          this.$refs.gridlayout.dragEvent('dragend', 'drop', newPos.x, newPos.y, 1, 1);
+          this.layout = this.layout.filter((obj) => obj.i !== 'drop');
+        }
+      }
+    },
+    dragend(e) {
+      const parentRect = document.getElementById('content').getBoundingClientRect();
+      let mouseInGrid = false;
+      if (((mouseXY.x > parentRect.left) && (mouseXY.x < parentRect.right))
+        && ((mouseXY.y > parentRect.top) && (mouseXY.y < parentRect.bottom))) {
+        mouseInGrid = true;
+      }
+      if (mouseInGrid === true) {
+        console.log(e);
+        console.log(`Dropped element props:\n${JSON.stringify(DragPos, ['x', 'y', 'w', 'h', 'i'], 2)}`);
+        this.$refs.gridlayout.dragEvent('dragend', 'drop', DragPos.x, DragPos.y, 1, 1);
+        this.layout = this.layout.filter((obj) => obj.i !== 'drop');
+
+        // add a dragged item.
+        this.layout.push({
+          x: DragPos.x,
+          y: DragPos.y,
+          w: 2,
+          h: 2,
+          i: DragPos.i,
+          type: e,
+        });
+        try {
+          this.$refs.gridLayout.dragEvent('dragend', DragPos.i, DragPos.x, DragPos.y, 1, 1);
+          this.$refs.gridLayout.$children[this.layout.length].$refs.item.style.display = 'block';
+        } catch (err) {
+          // console.log('error...', err);
+        }
+      }
+    },
   },
 };
-</script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
+</script>
+<style scoped lang="scss">
+* {
+  margin: 0;
   padding: 0;
+  border: 0;
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
+.droppable-element {
+  background-color: #fff;
+  border: 1px solid #e6e4e4;
+  box-shadow: 1px 1px 0 0 #ccc;
+  cursor: grab;
+  margin: 15px;
+  min-height: 110px;
+  position: relative;
+  text-align: center;
+  width: 163px;
 }
-a {
-  color: #42b983;
+.vue-grid-layout {
+  background: #eee;
+  //margin-top: 10px;
+  max-width: 760px;
+}
+.vue-grid-item:not(.vue-grid-placeholder) {
+  background: #fff;
+  box-shadow: 1px 1px #dedede;
+}
+.vue-grid-item .resizing {
+  opacity: 0.9;
+}
+.vue-grid-item .static {
+  background: #cce;
+}
+.vue-grid-item .text {
+  bottom: 0;
+  font-size: 24px;
+  height: 100%;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 0;
+  width: 100%;
+}
+.vue-grid-item .no-drag {
+  height: 100%;
+  width: 100%;
+}
+.vue-grid-item .minMax {
+  font-size: 12px;
+}
+.vue-grid-item .add {
+  cursor: pointer;
+}
+.vue-draggable-handle {
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10'><circle cx='5' cy='5' r='5' fill='#999999'/></svg>") no-repeat;
+  background-origin: content-box;
+  background-position: bottom right;
+  background-repeat: no-repeat;
+  box-sizing: border-box;
+  cursor: pointer;
+  height: 20px;
+  left: 0;
+  padding: 0 8px 8px 0;
+  position: absolute;
+  top: 0;
+  width: 20px;
+}
+
+.layoutJSON {
+  background: #ddd;
+  border: 1px solid black;
+  margin-top: 10px;
+  padding: 120px 10px;
+}
+.columns {
+  columns: 120px;
+}
+
+.col-3 {
+  min-width: 200px;
+
+  &.add-element {
+    background-color: #f0f0f0;
+    position: fixed;
+    right: 0;
+    top: 110px;
+    width: 390px;
+    z-index: 999999;
+  }
+}
+.persona {
+  max-width: 760px;
+}
+.persona-fields {
+  display: flex;
+  flex-wrap: wrap;
+}
+.navbar.vue-fixed-header {
+  background-color: #3C4646;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  z-index: 100;
+
+  .actions-menu {
+    background-color: #f0f0f0;
+    height: 64px;
+  }
+}
+.content {
+  margin-top: 110px;
 }
 </style>

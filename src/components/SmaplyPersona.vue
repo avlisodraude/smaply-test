@@ -169,6 +169,9 @@ export default {
     },
   },
   methods: {
+    onEditorFocus() {
+      console.log('ejemplo');
+    },
     drag() {
       const parentRect = document.getElementById('content').getBoundingClientRect();
       let mouseInGrid = false;

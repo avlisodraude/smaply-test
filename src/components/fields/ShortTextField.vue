@@ -1,9 +1,31 @@
 <template>
   <div>
     <header>Short text <font-awesome-icon icon="cog" /></header>
-    <p>This is the short text</p>
+    <ckeditor v-model="editorData" :config="editorConfig" type="inline"></ckeditor>
   </div>
 </template>
+<script>
+export default {
+  name: 'ShortTextField',
+  data() {
+    return {
+      editorData: '<p>Default content. Click to edit.</p>',
+      editorConfig: {
+        toolbar: [
+          ['Source'],
+          ['Format', 'Font', 'FontSize'],
+          ['Bold', 'Italic'],
+          ['Undo', 'Redo'],
+          {
+            name: 'links',
+            items: ['Link', 'Unlink', 'Anchor'],
+          },
+        ],
+      },
+    };
+  },
+};
+</script>
 <style scoped lang="scss">
 header {
   color: #999;

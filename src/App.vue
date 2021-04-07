@@ -15,6 +15,11 @@ export default {
 };
 </script>
 <style lang="scss">
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
 body {
   background-color: #646E6E;
 }

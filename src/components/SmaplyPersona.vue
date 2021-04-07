@@ -6,60 +6,62 @@
         <ActionsMenu/>
       </div>
     </fixed-header>
-    <div class="content">
-      <div id="maincontent">
-        <div class="persona">
-          <PersonaHeader/>
-          <div class="row">
-            <div class="col-3 persona-card">
+    <div class="persona-content">
+      <div class="content">
+        <div id="maincontent">
+          <div class="persona">
+            <PersonaHeader/>
+            <div class="row">
+              <div class="col-3 persona-card">
 
-            </div>
-            <div class="col-3 add-element">
-              <AddElementHeader/>
-              <div class="persona-fields">
-                <div v-for="element in addElement" :key="element.id">
-                  <div @drag="drag" @dragend="dragend(element.field_type)"
-                       class="droppable-element" draggable="true" unselectable="on" >
-                    <ContentBlock :header="element.title" :img-url="element.main"/></div>
-                </div>
               </div>
-              <InfoBlock/>
-              <br><br>
+              <div class="col-3 add-element">
+                <AddElementHeader/>
+                <div class="persona-fields">
+                  <div v-for="element in addElement" :key="element.id">
+                    <div @drag="drag" @dragend="dragend(element.field_type)"
+                         class="droppable-element" draggable="true" unselectable="on" >
+                      <ContentBlock :header="element.title" :img-url="element.main"/></div>
+                  </div>
+                </div>
+                <InfoBlock/>
+                <br><br>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div id="content">
-      <grid-layout ref="gridlayout" :layout.sync="layout"
-                   :col-num="6"
-                   :row-height="30"
-                   :is-draggable="true"
-                   :is-resizable="true"
-                   :vertical-compact="true"
-                   :use-css-transforms="true"
-      >
-        <grid-item :key="item.i" v-for="item in layout"
-                   :x="item.x"
-                   :y="item.y"
-                   :w="item.w"
-                   :h="item.h"
-                   :i="item.i"
-                   :type="item.type"
+      <div id="content">
+        <grid-layout ref="gridlayout" :layout.sync="layout"
+                     :col-num="6"
+                     :row-height="30"
+                     :is-draggable="true"
+                     :is-resizable="true"
+                     :vertical-compact="true"
+                     :use-css-transforms="true"
         >
-          <PersonaItem :element="item"/>
-        </grid-item>
-      </grid-layout>
-<!--      <div>-->
-<!--        <div class="layoutJSON">-->
-<!--          Displayed as <code>[x, y, w, h]</code>:-->
-<!--          <div class="columns">-->
-<!--            <div class="layoutItem" v-for="item in layout" :key="item.i">-->
-<!--              <b>{{ item.i }}</b>: [{{ item.x }}, {{ item.y }}, {{ item.w }}, {{ item.h }}]-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
+          <grid-item :key="item.i" v-for="item in layout"
+                     :x="item.x"
+                     :y="item.y"
+                     :w="item.w"
+                     :h="item.h"
+                     :i="item.i"
+                     :type="item.type"
+          >
+            <PersonaItem :element="item"/>
+          </grid-item>
+        </grid-layout>
+        <!--      <div>-->
+        <!--        <div class="layoutJSON">-->
+        <!--          Displayed as <code>[x, y, w, h]</code>:-->
+        <!--          <div class="columns">-->
+   <!--            <div class="layoutItem" v-for="item in layout" :key="item.i">-->
+<!-- <b>{{ item.i }}</b>: [{{ item.x }}, {{ item.y }}, {{ item.w }}, {{ item.h }}]-->
+        <!--            </div>-->
+        <!--          </div>-->
+        <!--        </div>-->
+        <!--      </div>-->
+      </div>
     </div>
   </div>
 </template>
@@ -357,7 +359,7 @@ $max-width-persona-card: 800px;
     height: 64px;
   }
 }
-.content {
+.persona-content {
   margin-top: 110px;
 }
 </style>

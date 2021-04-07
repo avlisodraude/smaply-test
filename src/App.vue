@@ -26,7 +26,7 @@ body {
 #app {
   color: #2c3e50;
   font-family: Source Sans Pro;
-  margin: 0;
+  margin: 0 auto;
   max-width: 1280px;
   padding:0;
 }

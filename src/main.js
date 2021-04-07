@@ -8,7 +8,10 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { faJs, faVuejs } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import CKEditor from 'ckeditor4-vue';
 import App from './App.vue';
+
+Vue.use(CKEditor);
 
 library.add(faCoffee, faJs, faVuejs, faCoins, faComment,
   faToolbox, faCog, faSave, faPlusSquare, faFile, faCopy, faInfoCircle,

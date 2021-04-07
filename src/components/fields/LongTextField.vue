@@ -1,8 +1,29 @@
 <template>
   <div>
     <header>Long text <font-awesome-icon icon="cog" /></header>
+    <ckeditor
+      class="long-text-field"
+      :editor="editor"
+      v-model="editorData"
+      :config="editorConfig"
+      type="inline">
+    </ckeditor>
   </div>
 </template>
+<script>
+export default {
+  name: 'ImageField',
+  data() {
+    return {
+      editor: 'ClassicEditor',
+      editorData: '<p>Default content. Click to edit.</p>',
+    };
+  },
+  mounted() {
+    // console.log('IMAGE FIELD');
+  },
+};
+</script>
 <style scoped lang="scss">
 header {
   color: #999;
@@ -21,5 +42,9 @@ img {
   display:block;
   margin:auto;
   padding: 10px;
+}
+.long-text-field {
+  padding: 0 10px;
+  color: #999;
 }
 </style>

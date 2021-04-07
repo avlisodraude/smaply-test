@@ -3,13 +3,26 @@
     <header>Image <font-awesome-icon icon="cog" /></header>
     <!--    <img :src="require(`../assets/${imgUrl}`)" alt="" width="54">-->
     <!--    <img :src="require(`../../assets/face-front.jpg`)" alt="" width="180">-->
+    <ckeditor class="image-field" v-model="editorData" :config="editorConfig" type="inline">
+    </ckeditor>
   </div>
 </template>
 <script>
 export default {
   name: 'ImageField',
-  mounted() {
-    // console.log('IMAGE FIELD');
+  data() {
+    return {
+      editorData: '<p>Add image.</p>',
+      editorConfig: {
+        toolbar: [
+          ['Bold', 'Italic'],
+          {
+            name: 'links',
+            items: ['Link', 'Unlink', 'Image'],
+          },
+        ],
+      },
+    };
   },
 };
 </script>
@@ -29,4 +42,9 @@ img {
   margin:auto;
   padding: 10px;
 }
+.image-field {
+  padding: 0 10px;
+  color: #999;
+}
+
 </style>

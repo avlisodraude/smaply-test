@@ -1,7 +1,8 @@
 <template>
   <div>
     <header>Short text <font-awesome-icon icon="cog" /></header>
-    <ckeditor v-model="editorData" :config="editorConfig" type="inline"></ckeditor>
+    <ckeditor class="short-text-field" v-model="editorData" :config="editorConfig" type="inline">
+    </ckeditor>
   </div>
 </template>
 <script>
@@ -45,5 +46,9 @@ img {
   display:block;
   margin:auto;
   padding: 10px;
+}
+.short-text-field {
+  padding: 0 10px;
+  color: #999;
 }
 </style>

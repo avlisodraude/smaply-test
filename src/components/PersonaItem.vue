@@ -37,9 +37,7 @@ export default {
     },
   },
   mounted() {
-    // console.log(this.element.field_type);
-    // console.log(this.element.order);
-    console.log(this.element.type);
+    // console.log(this.element.type);
   },
 };
 </script>

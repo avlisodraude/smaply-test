@@ -9,7 +9,7 @@
 export default {
   name: 'ImageField',
   mounted() {
-    console.log('calll');
+    // console.log('IMAGE FIELD');
   },
 };
 </script>

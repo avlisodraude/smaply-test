@@ -30,17 +30,6 @@
         </div>
       </div>
     </div>
-    <!--    <div>-->
-    <!--      <div class="layoutJSON">-->
-    <!--        Displayed as <code>[x, y, w, h]</code>:-->
-    <!--        <div class="columns">-->
-    <!--          <div class="layoutItem" v-for="item in layout" :key="item.i">-->
-    <!--            <b>{{ item.i }}</b>: [{{ item.x }}, {{ item.y }}, {{ item.w }}, {{ item.h }}]-->
-    <!--          </div>-->
-    <!--        </div>-->
-    <!--      </div>-->
-    <!--    </div>-->
-
     <div id="content">
       <grid-layout ref="gridlayout" :layout.sync="layout"
                    :col-num="6"
@@ -61,6 +50,16 @@
           <PersonaItem :element="item"/>
         </grid-item>
       </grid-layout>
+<!--      <div>-->
+<!--        <div class="layoutJSON">-->
+<!--          Displayed as <code>[x, y, w, h]</code>:-->
+<!--          <div class="columns">-->
+<!--            <div class="layoutItem" v-for="item in layout" :key="item.i">-->
+<!--              <b>{{ item.i }}</b>: [{{ item.x }}, {{ item.y }}, {{ item.w }}, {{ item.h }}]-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
     </div>
   </div>
 </template>
@@ -81,7 +80,7 @@ const DragPos = {
 };
 
 export default {
-  name: 'HelloWorld',
+  name: 'SmaplyPersona',
   components: {
     ActionsMenu,
     AddElementHeader,
@@ -116,34 +115,34 @@ export default {
       ],
       layout: [
         {
-          x: 0, y: 0, w: 2, h: 2, i: '0', type: 'SHORT_TEXT',
+          x: 2, y: 6, w: 4, h: 2, i: '0', type: 'SHORT_TEXT',
         },
         {
-          x: 2, y: 0, w: 2, h: 4, i: '1', type: 'SHORT_TEXT',
+          x: 2, y: 0, w: 4, h: 2, i: '1', type: 'SHORT_TEXT',
         },
         {
-          x: 4, y: 0, w: 2, h: 5, i: '2', type: 'IMAGE_GALLERY',
+          x: 0, y: 11, w: 2, h: 13, i: '2', type: 'IMAGE_GALLERY',
         },
         {
-          x: 4, y: 10, w: 2, h: 3, i: '3', type: 'SHORT_TEXT',
+          x: 2, y: 4, w: 4, h: 2, i: '3', type: 'SHORT_TEXT',
         },
         {
-          x: 2, y: 4, w: 2, h: 3, i: '4', type: 'IMAGE',
+          x: 2, y: 8, w: 4, h: 3, i: '4', type: 'SHORT_TEXT',
         },
         {
-          x: 2, y: 10, w: 2, h: 3, i: '5', type: 'SHORT_TEXT',
+          x: 2, y: 2, w: 4, h: 2, i: '5', type: 'SHORT_TEXT',
         },
         {
-          x: 0, y: 5, w: 2, h: 5, i: '6', type: 'IMAGE',
+          x: 0, y: 0, w: 2, h: 7, i: '6', type: 'IMAGE',
         },
         {
-          x: 0, y: 10, w: 2, h: 5, i: '7', type: 'SHORT_TEXT',
+          x: 0, y: 7, w: 2, h: 2, i: '7', type: 'SHORT_TEXT',
         },
         {
-          x: 4, y: 5, w: 2, h: 5, i: '8', type: 'IMAGE',
+          x: 0, y: 9, w: 2, h: 2, i: '8', type: 'SHORT_TEXT',
         },
         {
-          x: 0, y: 7, w: 4, h: 3, i: '9', type: 'SHORT_TEXT',
+          x: 2, y: 11, w: 4, h: 9, i: '9', type: 'LONG_TEXT',
         },
       ],
       draggable: true,
@@ -244,6 +243,7 @@ export default {
 
 </script>
 <style scoped lang="scss">
+$max-width-persona-card: 800px;
 * {
   margin: 0;
   padding: 0;
@@ -262,41 +262,41 @@ export default {
 }
 .vue-grid-layout {
   background: #eee;
-  //margin-top: 10px;
-  max-width: 760px;
+  max-width: $max-width-persona-card;
 }
 .vue-grid-item:not(.vue-grid-placeholder) {
   background: #fff;
   box-shadow: 1px 1px #dedede;
 }
-.vue-grid-item .resizing {
-  opacity: 0.9;
+
+.vue-grid-item {
+  .resizing {
+    opacity: 0.9;
+  }
+  .static {
+    background: #cce;
+  }
+  .text {
+    bottom: 0;
+    font-size: 24px;
+    height: 100%;
+    left: 0;
+    margin: auto;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
+    width: 100%;
+  }
+  .no-drag {
+    height: 100%;
+    width: 100%;
+  }
+  .add {
+    cursor: pointer;
+  }
 }
-.vue-grid-item .static {
-  background: #cce;
-}
-.vue-grid-item .text {
-  bottom: 0;
-  font-size: 24px;
-  height: 100%;
-  left: 0;
-  margin: auto;
-  position: absolute;
-  right: 0;
-  text-align: center;
-  top: 0;
-  width: 100%;
-}
-.vue-grid-item .no-drag {
-  height: 100%;
-  width: 100%;
-}
-.vue-grid-item .minMax {
-  font-size: 12px;
-}
-.vue-grid-item .add {
-  cursor: pointer;
-}
+
 .vue-draggable-handle {
   background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10'><circle cx='5' cy='5' r='5' fill='#999999'/></svg>") no-repeat;
   background-origin: content-box;
@@ -335,7 +335,7 @@ export default {
   }
 }
 .persona {
-  max-width: 760px;
+  max-width: $max-width-persona-card;
 }
 .persona-fields {
   display: flex;

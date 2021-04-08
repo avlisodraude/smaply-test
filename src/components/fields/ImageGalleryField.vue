@@ -1,8 +1,7 @@
 <template>
   <div>
     <header>image gallery <font-awesome-icon class="conf-icon" icon="cog" /></header>
-    <ckeditor class="image-gallery-field" v-model="editorData" :config="editorConfig" type="inline">
-    </ckeditor>
+   <ckeditor class="image-gallery-field" v-model="editorData" :config="editorConfig" type="inline"/>
   </div>
 </template>
 <script>

@@ -1,9 +1,14 @@
 <template>
   <div class="actions-menu">
     <div class="user-card">
-      <div class="persona-card">
-        <font-awesome-icon icon="user" size="lg"/>
-        <span class="persona-name">Persona {{ persona.name }}</span>
+      <div class="persona-name">
+        <font-awesome-icon class="user-icon" icon="user" size="lg"/> Persona
+        <ckeditor
+          v-model="editorData"
+          class="editor-text"
+          :config="editorConfig"
+          type="inline">
+        </ckeditor>
         <font-awesome-icon class="edit-persona-name" icon="edit" size="sm" /></div>
     </div>
     <div class="actions-btns">
@@ -25,10 +30,25 @@ export default {
   components: {
     ActionButton,
   },
+  data() {
+    return {
+      editorData: this.persona.name,
+      editorConfig: {
+        toolbar: [
+          ['Cut', 'Copy', 'Paste', 'PasteText'],
+        ],
+      },
+    };
+  },
   props: {
     persona: {
       type: Object,
       required: true,
+    },
+  },
+  watch: {
+    persona() {
+      console.log('test');
     },
   },
 };
@@ -47,6 +67,7 @@ export default {
 }
 .user-card {
   .persona-name {
+    color: #999;
     padding: 0 10px;
   }
   .edit-persona-name {
@@ -65,5 +86,16 @@ export default {
   svg {
     color: #646E6E;
   }
+}
+.user-icon {
+  margin-right: 10px;
+}
+.editor-text {
+  color: #000;
+  padding: 0 5px;
+}
+.cke_editable {
+  padding: 0 20px;
+  margin: 0 20px;
 }
 </style>

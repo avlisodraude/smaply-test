@@ -1,8 +1,7 @@
 <template>
   <div>
     <header>Short text <font-awesome-icon class="conf-icon" icon="cog" /></header>
-    <ckeditor class="short-text-field" v-model="editorData" :config="editorConfig" type="inline">
-    </ckeditor>
+    <ckeditor class="short-text-field" v-model="editorData" :config="editorConfig" type="inline" />
   </div>
 </template>
 <script>
@@ -10,7 +9,7 @@ export default {
   name: 'ShortTextField',
   data() {
     return {
-      editorData: '<p>Default content. Click to edit.</p>',
+      editorData: '<p>Click to edit.</p>',
       editorConfig: {
         toolbar: [
           ['Source'],

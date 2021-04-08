@@ -1,10 +1,7 @@
 <template>
   <div>
     <header>Image <font-awesome-icon class="conf-icon" icon="cog" /></header>
-    <!--    <img :src="require(`../assets/${imgUrl}`)" alt="" width="54">-->
-    <!--    <img :src="require(`../../assets/face-front.jpg`)" alt="" width="180">-->
-    <ckeditor class="image-field" v-model="editorData" :config="editorConfig" type="inline">
-    </ckeditor>
+    <ckeditor class="image-field" v-model="editorData" :config="editorConfig" type="inline" />
   </div>
 </template>
 <script>

@@ -6,8 +6,7 @@
       :editor="editor"
       v-model="editorData"
       :config="editorConfig"
-      type="inline">
-    </ckeditor>
+      type="inline" />
   </div>
 </template>
 <script>
@@ -16,11 +15,8 @@ export default {
   data() {
     return {
       editor: 'ClassicEditor',
-      editorData: '<p>Default content. Click to edit.</p>',
+      editorData: '<p>Click to edit.</p>',
     };
-  },
-  mounted() {
-    // console.log('IMAGE FIELD');
   },
 };
 </script>

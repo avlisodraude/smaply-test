@@ -20,9 +20,6 @@ export default {
       required: true,
     },
   },
-  mounted() {
-    console.log(this.persona);
-  },
 };
 </script>
 <style scoped lang="scss">

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <header>Long text <font-awesome-icon icon="cog" /></header>
+    <header>Long text <font-awesome-icon class="conf-icon" icon="cog" /></header>
     <ckeditor
       class="long-text-field"
       :editor="editor"
@@ -46,5 +46,10 @@ img {
 .long-text-field {
   padding: 0 10px;
   color: #999;
+}
+.conf-icon {
+  &:hover {
+    cursor: pointer;
+  }
 }
 </style>

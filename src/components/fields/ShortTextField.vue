@@ -1,6 +1,6 @@
 <template>
   <div>
-    <header>Short text <font-awesome-icon icon="cog" /></header>
+    <header>Short text <font-awesome-icon class="conf-icon" icon="cog" /></header>
     <ckeditor class="short-text-field" v-model="editorData" :config="editorConfig" type="inline">
     </ckeditor>
   </div>
@@ -50,5 +50,10 @@ img {
 .short-text-field {
   padding: 0 10px;
   color: #999;
+}
+.conf-icon {
+  &:hover {
+    cursor: pointer;
+  }
 }
 </style>

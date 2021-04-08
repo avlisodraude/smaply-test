@@ -1,6 +1,6 @@
 <template>
   <div>
-    <header>image gallery <font-awesome-icon icon="cog" /></header>
+    <header>image gallery <font-awesome-icon class="conf-icon" icon="cog" /></header>
     <ckeditor class="image-gallery-field" v-model="editorData" :config="editorConfig" type="inline">
     </ckeditor>
   </div>
@@ -46,5 +46,10 @@ img {
 .image-gallery-field {
   padding: 0 10px;
   color: #999;
+}
+.conf-icon {
+  &:hover {
+    cursor: pointer;
+  }
 }
 </style>

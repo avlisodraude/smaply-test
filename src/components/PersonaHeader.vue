@@ -3,14 +3,28 @@
     <img :src="require(`../assets/avatar-persona.png`)" height="56" alt="">
     <div class="persona-name">
       <h5>persona name</h5>
-      <p>Tess</p>
+      <p>{{ persona.name }}</p>
     </div>
     <div class="persona-shortname">
       <h5>short name</h5>
-      <p>tes</p>
+      <p>{{ persona.initials }}</p>
     </div>
   </header>
 </template>
+<script>
+export default {
+  name: 'PersonaHeader',
+  props: {
+    persona: {
+      type: Object,
+      required: true,
+    },
+  },
+  mounted() {
+    console.log(this.persona);
+  },
+};
+</script>
 <style scoped lang="scss">
 header {
   background-color: #DCDCDC;

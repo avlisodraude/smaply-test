@@ -3,14 +3,14 @@
     <fixed-header>
       <div class="navbar">
         <TopMenu/>
-        <ActionsMenu/>
+        <ActionsMenu v-if="persona" :persona="persona"/>
       </div>
     </fixed-header>
     <div class="persona-content">
       <div class="content">
         <div id="maincontent">
           <div class="persona">
-            <PersonaHeader/>
+            <PersonaHeader v-if="persona" :persona="persona"/>
             <div class="row">
               <div class="col-3 persona-card">
 
@@ -75,6 +75,7 @@ import PersonaHeader from '@/components/PersonaHeader.vue';
 import TopMenu from '@/components/menu/TopMenu.vue';
 import VueGridLayout from 'vue-grid-layout';
 import PersonaItem from '@/components/PersonaItem.vue';
+import axios from 'axios';
 
 const mouseXY = { x: null, y: null };
 const DragPos = {
@@ -156,7 +157,13 @@ export default {
       index: 0,
       marginX: 10,
       marginY: 10,
+      persona: null,
     };
+  },
+  created() {
+    axios.get('https://private-fdced4-smaplypersonastest.apiary-mock.com/personas/20').then((response) => {
+      this.persona = response.data;
+    });
   },
   mounted() {
     this.index = this.layout.length;

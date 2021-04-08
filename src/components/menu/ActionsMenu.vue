@@ -3,7 +3,7 @@
     <div class="user-card">
       <div class="persona-card">
         <font-awesome-icon icon="user" size="lg"/>
-        <span class="persona-name">Persona Tess</span>
+        <span class="persona-name">Persona {{ persona.name }}</span>
         <font-awesome-icon class="edit-persona-name" icon="edit" size="sm" /></div>
     </div>
     <div class="actions-btns">
@@ -24,6 +24,12 @@ export default {
   name: 'ActionsMenu',
   components: {
     ActionButton,
+  },
+  props: {
+    persona: {
+      type: Object,
+      required: true,
+    },
   },
 };
 </script>

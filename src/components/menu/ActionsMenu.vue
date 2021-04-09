@@ -3,14 +3,8 @@
     <div class="user-card">
       <div class="persona-name">
         <font-awesome-icon class="user-icon" icon="user" size="lg"/> Persona
-        <ckeditor
-          v-model="editorData"
-          class="editor-text"
-          :config="editorConfig"
-          @blur="onEditorInput"
-          type="inline">
-        </ckeditor>
-        <font-awesome-icon class="edit-persona-name" icon="edit" size="sm" /></div>
+  <span class="editName" :contenteditable="editable" @blur="switchEditable">{{ editorData }}</span>
+ <font-awesome-icon @click="switchEditable" class="edit-persona-name" icon="edit" size="sm" /></div>
     </div>
     <div class="actions-btns">
       <ActionButton text="Save persona" icon="save"/>
@@ -40,6 +34,7 @@ export default {
           ['Cut', 'Copy', 'Paste', 'PasteText'],
         ],
       },
+      editable: false,
     };
   },
   props: {
@@ -49,12 +44,14 @@ export default {
     },
   },
   methods: {
-    onEditorInput(e) {
-      const personaName = e.editor._.data;
-      const updatedPersona = this.persona;
-      updatedPersona.name = personaName;
+    switchEditable() {
+      this.editable = !this.editable;
+      const element = document.querySelector('.editName');
+      this.persona.name = element.innerHTML;
+      element.classList.toggle('editing');
+      // update data object.
       // TODO: validation needed and clean up (if needed)! save urls to config file.
-      axios.put('https://private-fdced4-smaplypersonastest.apiary-mock.com/personas/20', updatedPersona).then((r) => console.log(r));
+      axios.put('https://private-fdced4-smaplypersonastest.apiary-mock.com/personas/20', this.persona).then((r) => console.log(r));
     },
   },
 };
@@ -103,5 +100,15 @@ export default {
 .cke_editable {
   padding: 0 20px;
   margin: 0 20px;
+}
+.editing {
+  border: 2px solid white;
+  padding: 0 5px;
+  margin-right: 5px;
+  &:focus {
+    outline: none;
+    border:1px solid #666;
+    box-shadow: 0 0 10px #719ECE;
+  }
 }
 </style>

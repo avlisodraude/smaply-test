@@ -7,6 +7,7 @@
           v-model="editorData"
           class="editor-text"
           :config="editorConfig"
+          @blur="onEditorInput"
           type="inline">
         </ckeditor>
         <font-awesome-icon class="edit-persona-name" icon="edit" size="sm" /></div>
@@ -24,6 +25,7 @@
 </template>
 <script>
 import ActionButton from '@/components/ActionButton.vue';
+import axios from 'axios';
 
 export default {
   name: 'ActionsMenu',
@@ -46,9 +48,13 @@ export default {
       required: true,
     },
   },
-  watch: {
-    persona() {
-      console.log('test');
+  methods: {
+    onEditorInput(e) {
+      const personaName = e.editor._.data;
+      const updatedPersona = this.persona;
+      updatedPersona.name = personaName;
+      // TODO: validation needed and clean up (if needed)! save urls to config file.
+      axios.put('https://private-fdced4-smaplypersonastest.apiary-mock.com/personas/20', updatedPersona).then((r) => console.log(r));
     },
   },
 };

@@ -3,7 +3,7 @@
     <div class="top-menu">
       <div class="menu-item">
         <div class="img-logo">
-          <img class="img-top-menu" alt="Vue logo" src="https://via.placeholder.com/32x26.png">
+          <img :src="require(`/src/assets/smaply.png`)" alt="Smaply logo" height="26">
         </div>
         <div class="stats-block">
           <font-awesome-icon icon="user"/>

@@ -3,8 +3,14 @@
     <div class="user-card">
       <div class="persona-name">
         <font-awesome-icon class="user-icon" icon="user" size="lg"/> Persona
-  <span class="editName" :contenteditable="editable" @blur="switchEditable">{{ editorData }}</span>
- <font-awesome-icon @click="switchEditable" class="edit-persona-name" icon="edit" size="sm" /></div>
+        <input v-show="editable" type="text" id="fname" :value="persona.name" name="fname"
+               class="editName" @blur="switchEditable">
+        <span v-show="!editable" class="editName">{{ persona.name }}</span>
+        <font-awesome-icon v-show="!editable" @click="switchEditable"
+                           class="edit-persona-name" icon="edit" size="sm"/>
+        <font-awesome-icon v-show="editable"
+                           @click="switchEditable" class="edit-persona-name" icon="save" size="sm"/>
+      </div>
     </div>
     <div class="actions-btns">
       <ActionButton text="Save persona" icon="save"/>
@@ -47,8 +53,7 @@ export default {
     switchEditable() {
       this.editable = !this.editable;
       const element = document.querySelector('.editName');
-      // textContent (return only the text while innerHTML includes any tags added like <br><p>...)
-      this.persona.name = element.textContent;
+      this.persona.name = element.value;
       element.classList.toggle('editing');
       // update data object.
       // TODO: validation needed and clean up (if needed)! save urls to config file.
@@ -111,5 +116,10 @@ export default {
     border:1px solid #666;
     box-shadow: 0 0 10px #719ECE;
   }
+}
+#fname {
+  margin-left: 6px;
+  height: 18px;
+  width: 80px;
 }
 </style>

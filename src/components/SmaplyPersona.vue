@@ -255,7 +255,7 @@ export default {
 
 </script>
 <style scoped lang="scss">
-$max-width-persona-card: 800px;
+$max-width-persona-card: 880px;
 * {
   margin: 0;
   padding: 0;
@@ -368,5 +368,8 @@ $max-width-persona-card: 800px;
 }
 .persona-content {
   margin-top: 110px;
+}
+#content {
+  max-width: $max-width-persona-card;
 }
 </style>

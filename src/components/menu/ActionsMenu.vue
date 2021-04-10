@@ -57,7 +57,9 @@ export default {
       element.classList.toggle('editing');
       // update data object.
       // TODO: validation needed and clean up (if needed)! save urls to config file.
-      axios.put('https://private-fdced4-smaplypersonastest.apiary-mock.com/personas/20', this.persona).then((r) => console.log(r));
+      if (!this.editable) {
+        axios.put('https://private-fdced4-smaplypersonastest.apiary-mock.com/personas/20', this.persona).then((r) => console.log(r.data));
+      }
     },
   },
 };

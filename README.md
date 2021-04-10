@@ -20,3 +20,8 @@ npm run build
 npm run lint
 ```
 
+### Screencast 
+
+https://user-images.githubusercontent.com/5918438/114281685-74a18f80-9a48-11eb-88b8-9f1487205e56.mp4
+
+

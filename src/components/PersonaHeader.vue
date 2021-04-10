@@ -38,7 +38,7 @@ header {
     height: 56px;
     margin: auto 0;
     padding: 0 10px;
-    width: 62%;
+    width: 65%;
   }
   h5, p {
     margin: 3px;

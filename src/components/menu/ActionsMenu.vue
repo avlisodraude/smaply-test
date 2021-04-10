@@ -47,7 +47,8 @@ export default {
     switchEditable() {
       this.editable = !this.editable;
       const element = document.querySelector('.editName');
-      this.persona.name = element.innerHTML;
+      // textContent (return only the text while innerHTML includes any tags added like <br><p>...)
+      this.persona.name = element.textContent;
       element.classList.toggle('editing');
       // update data object.
       // TODO: validation needed and clean up (if needed)! save urls to config file.

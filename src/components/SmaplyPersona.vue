@@ -96,58 +96,18 @@ export default {
     PersonaItem,
     TopMenu,
   },
+  props: {
+    addElement: {
+      type: Array,
+      required: true,
+    },
+    layout: {
+      type: Array,
+      required: true,
+    },
+  },
   data() {
     return {
-      // Elements to select from.
-      addElement: [
-        {
-          id: 1, field_type: 'SHORT_TEXT', main: 'text.png', title: 'SHORT TEXT', data: null,
-        },
-        {
-          id: 2, field_type: 'LONG_TEXT', main: 'long.png', title: 'LONG TEXT', data: null,
-        },
-        {
-          id: 3, field_type: 'IMAGE', main: 'image.png', title: 'IMAGE', data: null,
-        },
-        {
-          id: 4, field_type: 'IMAGE_GALLERY', main: 'galleryImgs.png', title: 'IMAGE GALLERY', data: null,
-        },
-        {
-          id: 5, field_type: 'NUMBER', main: 'numbers.png', title: 'NUMBER', data: null,
-        },
-      ],
-      layout: [
-        {
-          x: 2, y: 6, w: 4, h: 2, i: '0', type: 'SHORT_TEXT',
-        },
-        {
-          x: 2, y: 0, w: 4, h: 2, i: '1', type: 'SHORT_TEXT',
-        },
-        {
-          x: 0, y: 11, w: 2, h: 13, i: '2', type: 'IMAGE_GALLERY',
-        },
-        {
-          x: 2, y: 4, w: 4, h: 2, i: '3', type: 'SHORT_TEXT',
-        },
-        {
-          x: 2, y: 8, w: 4, h: 3, i: '4', type: 'SHORT_TEXT',
-        },
-        {
-          x: 2, y: 2, w: 4, h: 2, i: '5', type: 'SHORT_TEXT',
-        },
-        {
-          x: 0, y: 0, w: 2, h: 7, i: '6', type: 'IMAGE',
-        },
-        {
-          x: 0, y: 7, w: 2, h: 2, i: '7', type: 'SHORT_TEXT',
-        },
-        {
-          x: 0, y: 9, w: 2, h: 2, i: '8', type: 'SHORT_TEXT',
-        },
-        {
-          x: 2, y: 11, w: 4, h: 9, i: '9', type: 'LONG_TEXT',
-        },
-      ],
       draggable: true,
       resizable: true,
       mirrored: false,
@@ -171,11 +131,6 @@ export default {
       mouseXY.x = e.clientX;
       mouseXY.y = e.clientY;
     }, false);
-  },
-  watch: {
-    layout() {
-      // console.log(this.layout);
-    },
   },
   methods: {
     onEditorFocus() {

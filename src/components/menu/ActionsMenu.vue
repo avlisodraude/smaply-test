@@ -3,9 +3,9 @@
     <div class="user-card">
       <div class="persona-name">
         <font-awesome-icon class="user-icon" icon="user" size="lg"/> Persona
-        <input v-show="editable" type="text" id="fname" :value="persona.name" name="fname"
+        <input v-show="editable" type="text" id="fname" :value="persona.name"
                class="editName" @blur="switchEditable">
-        <span v-show="!editable" class="editName">{{ persona.name }}</span>
+        <span v-show="!editable" class="setName">{{ persona.name }}</span>
         <font-awesome-icon v-show="!editable" @click="switchEditable"
                            class="edit-persona-name" icon="edit" size="sm"/>
         <font-awesome-icon v-show="editable"
@@ -52,9 +52,14 @@ export default {
   methods: {
     switchEditable() {
       this.editable = !this.editable;
-      const element = document.querySelector('.editName');
-      this.persona.name = element.value;
-      element.classList.toggle('editing');
+      const editedName = document.querySelector('.editName').value;
+      const setName = document.querySelector('.setName').innerHTML;
+
+      if (editedName === setName) {
+        console.log('same name, nothing to update!');
+        return;
+      }
+      this.persona.name = editedName;
       // update data object.
       // TODO: validation needed and clean up (if needed)! save urls to config file.
       if (!this.editable) {
@@ -109,16 +114,7 @@ export default {
   padding: 0 20px;
   margin: 0 20px;
 }
-.editing {
-  border: 2px solid white;
-  padding: 0 5px;
-  margin-right: 5px;
-  &:focus {
-    outline: none;
-    border:1px solid #666;
-    box-shadow: 0 0 10px #719ECE;
-  }
-}
+
 #fname {
   margin-left: 6px;
   height: 18px;
